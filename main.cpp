@@ -1,9 +1,39 @@
 #include <iostream>
+#include <string.h>
+#include <unordered_map>
+
+std::unordered_map<char,int> frequencyMap; 
+
+void countFrequencies(std::string);
 
 int main (){
-    std::cout<<"Please provide me a string that I can encode"; 
+    
+    std::string userInput; 
 
-    std::cout<<"hello";
+    std::cout<<"Please provide me a string that I can encode\n"; 
+    std::getline(std::cin,userInput); 
+
+
+    // We want to count the frequencies of the string that has been provided, and store them somewhere
+    countFrequencies(userInput);
+    
+    for (const auto& pair : frequencyMap){
+            std::cout << pair.first << " : " << pair.second << '\n';
+        }
     
     return 0;
+}
+
+void countFrequencies (std::string inputString){ 
+
+    for (int i=0; i<=inputString.length(); i++){
+
+        if (!frequencyMap.contains(inputString[i])){ 
+            frequencyMap[inputString[i]] = 1; 
+
+        }
+        else {
+            frequencyMap[inputString[i]]++;
+        }
+    }
 }
