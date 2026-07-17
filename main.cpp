@@ -2,9 +2,18 @@
 #include <string.h>
 #include <unordered_map>
 
+struct Node { 
+    char character; 
+    int frequency; 
+
+    Node* left; 
+    Node* right; 
+}
+
 std::unordered_map<char,int> frequencyMap; 
 
 void countFrequencies(std::string);
+void makeNodes();
 
 int main (){
     
@@ -22,6 +31,10 @@ int main (){
         }
     
     return 0;
+}
+
+void makeNodes(){
+    
 }
 
 void countFrequencies (std::string inputString){ 
