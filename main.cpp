@@ -8,7 +8,7 @@ struct Node {
 
     Node* left; 
     Node* right; 
-}
+};
 
 std::unordered_map<char,int> frequencyMap; 
 
@@ -38,15 +38,7 @@ void makeNodes(){
 }
 
 void countFrequencies (std::string inputString){ 
-
-    for (int i=0; i<=inputString.length(); i++){
-
-        if (!frequencyMap.contains(inputString[i])){ 
-            frequencyMap[inputString[i]] = 1; 
-
-        }
-        else {
-            frequencyMap[inputString[i]]++;
-        }
+    for (int i=0; i<inputString.length(); i++){
+        frequencyMap[inputString[i]]++;
     }
 }
