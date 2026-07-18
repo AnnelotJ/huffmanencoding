@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <unordered_map>
+#include <queue> 
 
 struct Node { 
     char character; 
@@ -8,9 +9,16 @@ struct Node {
 
     Node* left; 
     Node* right; 
+
+    Node (char character, int frequency){ 
+        character = character; 
+        frequency = frequency;
+    }
 };
 
 std::unordered_map<char,int> frequencyMap; 
+std::priority_queue<Node*, std::vector<Node*> std::greater<int>> nodePriorityQueue;  
+
 
 void countFrequencies(std::string);
 void makeNodes();
@@ -34,8 +42,14 @@ int main (){
 }
 
 void makeNodes(){
+    for (const auto& [character,frequency] : frequencyMap){
+        Node n =
+    }
+
+
     
 }
+
 
 void countFrequencies (std::string inputString){ 
     for (int i=0; i<inputString.length(); i++){

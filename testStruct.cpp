@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <string.h> 
+#include <queue>
 
 struct Person{ 
     std::string name;
@@ -8,12 +9,17 @@ struct Person{
 
 
 int main(){ 
-    Person Annelot; 
-    Person Ryan; 
 
-    std::cout<<Annelot.name; 
+std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
+pq.push(3);
+pq.push(1);
+pq.push(8);
 
-    Annelot.name = "Annelot"; 
-    std::cout << Annelot.name; 
+while (!pq.empty()) {
+    std::cout << pq.top() << " ";
+    pq.pop();
+}
+
+
     return 0; 
 }
