@@ -10,14 +10,11 @@ struct Node {
     Node* left; 
     Node* right; 
 
-    Node (char character, int frequency){ 
-        character = character; 
-        frequency = frequency;
-    }
+   Node (char charachter, int frequency): character(character), frequency (frequency), left (nullptr), right(nullptr_t){}
 };
 
 std::unordered_map<char,int> frequencyMap; 
-std::priority_queue<Node*, std::vector<Node*> std::greater<int>> nodePriorityQueue;  
+std::priority_queue<Node*, std::vector<Node*>, std::greater<int>> nodePriorityQueue;  
 
 
 void countFrequencies(std::string);
@@ -33,21 +30,21 @@ int main (){
 
     // We want to count the frequencies of the string that has been provided, and store them somewhere
     countFrequencies(userInput);
+
+    makeNodes();
     
-    for (const auto& pair : frequencyMap){
-            std::cout << pair.first << " : " << pair.second << '\n';
-        }
+    // for (const auto& pair : frequencyMap){
+    //         std::cout << pair.first << " : " << pair.second << '\n';
+    //     }
     
     return 0;
 }
 
 void makeNodes(){
     for (const auto& [character,frequency] : frequencyMap){
-        Node n =
+        std::cout<<"hello\n";
     }
 
-
-    
 }
 
 
