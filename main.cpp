@@ -10,11 +10,18 @@ struct Node {
     Node* left; 
     Node* right; 
 
-   Node (char charachter, int frequency): character(character), frequency (frequency), left (nullptr), right(nullptr_t){}
+   Node (char character , int frequency): character(character ), frequency (frequency), left (nullptr), right(nullptr){}
+};
+
+struct comparator {
+    bool operator ()(Node* a, Node* b){
+        return a->frequency > b->frequency;
+        
+    }
 };
 
 std::unordered_map<char,int> frequencyMap; 
-std::priority_queue<Node*, std::vector<Node*>, std::greater<int>> nodePriorityQueue;  
+std::priority_queue<Node*, std::vector<Node*>, comparator> nodePriorityQueue;  
 
 
 void countFrequencies(std::string);
@@ -31,18 +38,28 @@ int main (){
     // We want to count the frequencies of the string that has been provided, and store them somewhere
     countFrequencies(userInput);
 
+    std::cout<<"The frequencies are as followed:\n";
+    for (const auto& pair : frequencyMap){
+            std::cout << pair.first << " : " << pair.second << '\n';
+        }
+    
     makeNodes();
     
-    // for (const auto& pair : frequencyMap){
-    //         std::cout << pair.first << " : " << pair.second << '\n';
-    //     }
     
     return 0;
 }
 
 void makeNodes(){
     for (const auto& [character,frequency] : frequencyMap){
-        std::cout<<"hello\n";
+        nodePriorityQueue.push(new Node(character,frequency));
+    }
+
+    std::cout<<"This is the current priority queue:\n";
+    while (!nodePriorityQueue.empty()) {
+    Node* n = nodePriorityQueue.top();   // grab the top pointer
+    nodePriorityQueue.pop();             // remove it
+    std::cout << n->character << " : " << n->frequency << "\n";
+    //           ^^ use -> to reach into the node the pointer points at
     }
 
 }
