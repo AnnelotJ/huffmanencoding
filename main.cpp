@@ -22,12 +22,15 @@ struct comparator {
 };
 
 std::unordered_map<char,int> frequencyMap; 
-std::priority_queue<Node*, std::vector<Node*>, comparator> nodePriorityQueue;  
+std::unordered_map<char,std::string> codes;
+std::priority_queue<Node*, std::vector<Node*>, comparator> nodePriorityQueue;
+
 
 
 void countFrequencies(std::string);
 void makeNodes();
 void merge(Node*, Node*); 
+void walk (Node* node, std::string); 
 
 int main (){
     
@@ -40,10 +43,10 @@ int main (){
     // We want to count the frequencies of the string that has been provided, and store them somewhere
     countFrequencies(userInput);
 
-    std::cout<<"The frequencies are as followed:\n";
-    for (const auto& pair : frequencyMap){
-            std::cout << pair.first << " : " << pair.second << '\n';
-        }
+    // std::cout<<"The frequencies are as followed:\n";
+    // for (const auto& pair : frequencyMap){
+    //         std::cout << pair.first << " : " << pair.second << '\n';
+    //     }
     
 
     makeNodes();
@@ -53,35 +56,58 @@ int main (){
         nodePriorityQueue.pop(); 
         Node* b = nodePriorityQueue.top(); 
         nodePriorityQueue.pop(); 
-
-        std::cout<<"The first node frequency is: " << a->frequency <<"\n"; 
-        std::cout<<"The second node frequency is: " << b->frequency << "\n"; 
-        // merge(a,b); 
-
+        merge(a,b); 
     }
     
     Node* root = nodePriorityQueue.top(); 
     nodePriorityQueue.pop();
-    std::cout<<"The frequency of the root node is: " << root->frequency <<"\n";
+    // std::cout<<"The frequency of the root node is: " << root->frequency <<"\n";
 
+    walk(root, ""); 
+
+    // So this is the map that has been created
+    std::cout<< "The code table is as followed:\n";
+    for (const auto& [character, code] : codes) {
+    std::cout << character << " : " << code << "\n";
+    }
+
+    // lets encode the strin now
+    std::string stringEncode= ""; 
+    for (int i =0; i < userInput.size(); i++){ 
+
+        stringEncode = stringEncode + codes[userInput[i]];
+    }
+    std::cout<< stringEncode << "\n" ;
 
     
     
     return 0;
 }
 
-void merge(Node* a, Node* b){
-    // Check whether node A is bigger than node b 
-    if (comparator(a, b)){
-        // If a is bigger than b than a goes to the left and b goed to the right; 
-        b.left(a);
-        a.right(b)
+void walk (Node* node, std::string code){
+    // Checking if it is a leaf
+    if (node->left == nullptr and node->right == nullptr){
+        codes[node->character] = code;
     }
-    else {
-        b.left(a);
-        a.right(b)
 
+    else {
+        walk(node->left, code + "0");
+        walk(node->right, code + "1");
     }
+}
+
+void merge(Node* a, Node* b){
+    // A is the smaller node and B is the bigger node 
+    int parentFreq = a->frequency + b->frequency; 
+    
+    Node* parent = new Node('\0', parentFreq); 
+
+    parent->left = b; 
+    parent->right = a; 
+
+    auto copyNodePriorityQueue = nodePriorityQueue;
+    nodePriorityQueue.push(parent);
+
 
 }
 
@@ -91,13 +117,13 @@ void makeNodes(){
     }
     auto copyNodePriorityQueue = nodePriorityQueue;
 
-    std::cout<<"This is the current priority queue:\n";
-    while (!copyNodePriorityQueue.empty()) {
-    Node* n = copyNodePriorityQueue.top();   
-    copyNodePriorityQueue.pop();             
-    std::cout << n->character << " : " << n->frequency << "\n";
+    // std::cout<<"This is the current priority queue:\n";
+    // while (!copyNodePriorityQueue.empty()) {
+    // Node* n = copyNodePriorityQueue.top();   
+    // copyNodePriorityQueue.pop();             
+    // std::cout << n->character << " : " << n->frequency << "\n";
 
-    }
+    // }
 
 }
 
