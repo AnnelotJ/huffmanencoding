@@ -25,12 +25,11 @@ std::unordered_map<char,int> frequencyMap;
 std::unordered_map<char,std::string> codes;
 std::priority_queue<Node*, std::vector<Node*>, comparator> nodePriorityQueue;
 
-
-
 void countFrequencies(std::string);
 void makeNodes();
 void merge(Node*, Node*); 
 void walk (Node* node, std::string); 
+void decode (Node* node, std::string);
 
 int main (){
     
@@ -71,7 +70,7 @@ int main (){
     std::cout << character << " : " << code << "\n";
     }
 
-    // lets encode the strin now
+    
     std::string stringEncode= ""; 
     for (int i =0; i < userInput.size(); i++){ 
 
@@ -79,9 +78,29 @@ int main (){
     }
     std::cout<< stringEncode << "\n" ;
 
-    
+    decode(root,stringEncode);
     
     return 0;
+}
+
+void decode (Node* rootNode, std::string encodedString){
+    Node* current = rootNode;
+    std::string result = "";
+    for (char bit : encodedString){
+         if (bit == '1'){
+            current = current->right;
+        }
+        else{
+            current = current->left;
+        }
+        if (current->left == nullptr and current->right == nullptr){
+            result += current->character;
+            current = rootNode;
+        }
+
+    }
+    std::cout<<"this is the decoded again:\n";
+    std::cout << result << "\n";
 }
 
 void walk (Node* node, std::string code){
